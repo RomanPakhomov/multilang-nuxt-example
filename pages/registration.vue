@@ -74,10 +74,11 @@ export default {
     async submit() {
       let valid = true;
       for (const field in this.validations) {
-        if (!field.valid) {
+        if (!this.validations[field].valid) {
           valid = false;
         }
       }
+      console.log(valid);
       if (valid) {
         try {
           const result = await this.mockedHttp.register(

@@ -9,8 +9,9 @@ export const validationMixin = {
         };
         if (
           this.validations[field].between &&
-          (this.validations[field].between[0] > this.formSchema[field].length ||
-            this.validations[field].between[1] < this.formSchema[field].length)
+          (this.validations[field].between[0] >=
+            this.formSchema[field].length ||
+            this.validations[field].between[1] <= this.formSchema[field].length)
         ) {
           console.log('between');
           const min = this.validations[field].between[0];
@@ -25,7 +26,7 @@ export const validationMixin = {
         }
         if (
           this.validations[field].min &&
-          this.formSchema[field].length < this.validations[field].min
+          this.formSchema[field].length <= this.validations[field].min
         ) {
           const min = this.validations[field].min;
           this.validations[field] = {
@@ -35,7 +36,7 @@ export const validationMixin = {
         }
         if (
           this.validations[field].max &&
-          this.formSchema[field].length > this.validations[field].max
+          this.formSchema[field].length >= this.validations[field].max
         ) {
           const max = this.validations[field].max;
           this.validations[field] = {

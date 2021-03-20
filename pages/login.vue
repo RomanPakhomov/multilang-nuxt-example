@@ -58,7 +58,7 @@ export default {
     async submit() {
       let valid = true;
       for (const field in this.validations) {
-        if (!field.valid) {
+        if (!this.validations[field].valid) {
           valid = false;
         }
       }
