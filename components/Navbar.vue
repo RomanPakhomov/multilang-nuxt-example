@@ -145,7 +145,7 @@ export default {
     }
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 520px) {
   .nav-xs-button {
     display: block;
   }
@@ -156,7 +156,7 @@ export default {
     display: none !important;
   }
 }
-@media (min-width: 500px) {
+@media (min-width: 520px) {
   .nav-xs-button {
     display: none;
   }
