@@ -1,0 +1,21 @@
+export default {
+  login: 'Sign in',
+  registration: 'Sign up',
+  wallets: 'Wallets',
+  email: 'Email',
+  name: 'Name',
+  password: 'Password',
+  balance: 'Overall balance',
+  send: 'Send',
+  receive: 'Receive',
+  invalidMin: 'This field should be more than {min}',
+  invalidMax: 'This field should be less than {max}',
+  invalidBetween: 'This field should be between {min} and {max}',
+  required: 'This field is required',
+  pages: {
+    index: 'Main',
+    login: 'Login',
+    registration: 'Registration',
+    error: 'Error',
+  },
+};
