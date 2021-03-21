@@ -4,6 +4,7 @@ module.exports = {
     browser: true,
     node: true,
   },
+  ignorePatterns: ["nuxt.config.js", ".eslintrc.js"],
   parserOptions: {
     parser: 'babel-eslint',
   },

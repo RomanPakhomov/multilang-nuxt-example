@@ -66,11 +66,6 @@ export default {
     'cookie-universal-nuxt'
   ],
 
-  loading: {
-    color: 'blue',
-    height: '5px'
-  },
-
   router: {
     middleware: ['guard']
   },
