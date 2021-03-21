@@ -11,6 +11,30 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }} Made by Roman Pakhomov</span>
     </v-footer>
+    <v-snackbar v-model="snackbarError" :timeout="timeout">
+      {{ errorText }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbarError = false">
+          {{ $t('close') }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarSuccess" :timeout="timeout">
+      {{ successText }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbarSuccess = false"
+        >
+          {{ $t('close') }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-overlay v-if="loading" :value="loading" class="loading">
+      <img src="/Spinner-0.8s-314px.svg" alt="" />
+    </v-overlay>
   </v-app>
 </template>
 
@@ -27,6 +51,12 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      snackbarError: false,
+      errorText: '',
+      snackbarSuccess: false,
+      successText: '',
+      timeout: 2000,
+      loading: false,
       items: [
         {
           icon: 'mdi-apps',
@@ -49,6 +79,29 @@ export default {
     '$store.state.hidden'() {
       this.hidden = this.$store.state.hidden;
     },
+    '$store.state.error'() {
+      this.errorText = this.$store.state.error;
+      this.snackbarError = true;
+    },
+    '$store.state.success'() {
+      this.successText = this.$store.state.success;
+      this.snackbarSuccess = true;
+    },
+    '$store.state.loading'() {
+      this.loading = this.$store.state.loading;
+    },
   },
 };
 </script>
+
+<style lang="scss">
+.loading {
+  transition: 0.3s;
+
+  .v-overlay__scrim {
+    opacity: 0.65 !important;
+    background-color: #000 !important;
+    border-color: #000 !important;
+  }
+}
+</style>

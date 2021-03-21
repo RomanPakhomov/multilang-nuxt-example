@@ -12,6 +12,10 @@ export default {
   invalidMax: 'This field should be less than {max}',
   invalidBetween: 'This field should be between {min} and {max}',
   required: 'This field is required',
+  close: 'Close',
+  regSuccess: 'Registration success',
+  regError: 'Registration error',
+  loginError: 'Sign in error',
   pages: {
     index: 'Main',
     login: 'Login',

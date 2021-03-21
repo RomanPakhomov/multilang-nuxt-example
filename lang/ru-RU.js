@@ -12,6 +12,10 @@ export default {
   invalidMax: 'Это поле должно быть меньше {max} символов',
   invalidBetween: 'Это поле должно иметь длину между {min} и {max} символами',
   required: 'Это обязательное поле',
+  close: 'Закрыть',
+  regSuccess: 'Регистрация прошла успешно',
+  regError: 'Ошибка регистрации',
+  loginError: 'Ошибка авторизации',
   pages: {
     index: 'Главная',
     login: 'Вход',
