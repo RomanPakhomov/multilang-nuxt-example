@@ -55,7 +55,7 @@ export default {
       errorText: '',
       snackbarSuccess: false,
       successText: '',
-      timeout: 2000,
+      timeout: 5000,
       loading: false,
       items: [
         {

@@ -27,13 +27,27 @@ export default {
   componnets: {
     Wallet,
   },
-  data: () => ({
-    getUrl: '',
-    wallets: [],
-    combinedSumm: null,
-  }),
+  data: () => ({}),
   async fetch() {
     await this.$store.dispatch('getWallets');
+  },
+  computed: {
+    wallets: {
+      get() {
+        return this.$store.state.wallets;
+      },
+      set() {
+        return [];
+      },
+    },
+    combinedSumm: {
+      get() {
+        return this.$store.state.combinedSumm;
+      },
+      set() {
+        return 0;
+      },
+    },
   },
   watch: {
     '$store.state.wallets'() {

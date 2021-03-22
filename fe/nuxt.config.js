@@ -68,8 +68,12 @@ export default {
     '@nuxtjs/proxy'
   ],
 
+  axios: {
+    proxy: true
+  },
+
   proxy: {
-    '/api': 'http://example.com',
+    '/api/': { changeOrigin: true },
   },
 
   router: {

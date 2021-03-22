@@ -3,6 +3,7 @@
     <v-card-text>
       <div class="coin-name">
         <div
+          v-if="img"
           class="coin-img"
           :style="{ backgroundImage: 'url(/' + img + ')' }"
         ></div>

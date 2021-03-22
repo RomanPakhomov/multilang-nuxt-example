@@ -53,7 +53,7 @@ export default {
     loginUrl: 'login',
   }),
   methods: {
-    submit() {
+    async submit() {
       let valid = true;
       for (const field in this.validations) {
         if (!this.validations[field].valid) {
@@ -61,7 +61,7 @@ export default {
         }
       }
       if (valid) {
-        const result = this.$store.dispatch('login', {
+        const result = await this.$store.dispatch('login', {
           email: this.formSchema.email,
           password: this.formSchema.password,
         });

@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { jwt } from 'jsonwebtoken';
-
 @Injectable()
 export class AppService {
 
@@ -34,10 +32,6 @@ export class AppService {
     };
   }
 
-  getCombunedSumm(): any {
-    return this.combinedSumm;
-  }
-
   registration(user: any): any {
     this.users.push({
       name: user.name,
@@ -49,10 +43,8 @@ export class AppService {
   login(user: any): any {
     const find = this.users.find(u => u.email === user.email && u.password === user.password);
     if (find) {
-      const access_token = jwt.sign({ data: user.email }, 'secret', {
-        expiresIn: 60 * 60,
-      });
-      return { access_token };
+      const accessToken = user.email + user.password;
+      return { accessToken };
     }
   }
 }
