@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { axiosMixin } from '../mixins/axios';
 import Wallet from '../components/Wallet';
 
 export default {
@@ -28,20 +27,20 @@ export default {
   componnets: {
     Wallet,
   },
-  mixins: [axiosMixin],
   data: () => ({
     getUrl: '',
     wallets: [],
     combinedSumm: null,
   }),
-  async mounted() {
-    await this.getData();
+  async fetch() {
+    await this.$store.dispatch('getWallets');
   },
-  methods: {
-    async getData() {
-      const result = await this.mockedHttp.get(this.getUrl);
-      this.wallets = result.wallets;
-      this.combinedSumm = result.combinedSumm;
+  watch: {
+    '$store.state.wallets'() {
+      this.wallets = this.$store.state.wallets;
+    },
+    '$store.state.combinedSumm'() {
+      this.combinedSumm = this.$store.state.combinedSumm;
     },
   },
 };

@@ -43,12 +43,11 @@
 </template>
 
 <script>
-import { axiosMixin } from '../mixins/axios';
 import { validationMixin } from '../mixins/validation';
 
 export default {
   name: 'Registration',
-  mixins: [axiosMixin, validationMixin],
+  mixins: [validationMixin],
   data: () => ({
     formSchema: {
       name: '',
@@ -71,7 +70,7 @@ export default {
     registrationUrl: 'registration',
   }),
   methods: {
-    async submit() {
+    submit() {
       let valid = true;
       for (const field in this.validations) {
         if (!this.validations[field].valid) {
@@ -80,18 +79,13 @@ export default {
       }
       console.log(valid);
       if (valid) {
-        try {
-          const result = await this.mockedHttp.register(
-            this.registrationUrl,
-            this.formSchema
-          );
-          if (result) {
-            localStorage.setItem('name', this.formSchema.name);
-            localStorage.setItem('email', this.formSchema.email);
-            localStorage.setItem('password', this.formSchema.password);
-          }
-        } catch (e) {
-          this.$store.commit('setError', e);
+        const result = this.$store.dispatch('registr', {
+          name: this.formSchema.name,
+          email: this.formSchema.email,
+          password: this.formSchema.password,
+        });
+        if (result) {
+          this.$router.push('/login');
         }
       }
     },

@@ -12,7 +12,7 @@
       <span>&copy; {{ new Date().getFullYear() }} Made by Roman Pakhomov</span>
     </v-footer>
     <v-snackbar v-model="snackbarError" :timeout="timeout">
-      {{ errorText }}
+      {{ $t(errorText) }}
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbarError = false">
           {{ $t('close') }}
@@ -20,7 +20,7 @@
       </template>
     </v-snackbar>
     <v-snackbar v-model="snackbarSuccess" :timeout="timeout">
-      {{ successText }}
+      {{ $t(successText) }}
       <template v-slot:action="{ attrs }">
         <v-btn
           color="blue"

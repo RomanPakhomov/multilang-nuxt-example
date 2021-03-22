@@ -32,13 +32,11 @@
 </template>
 
 <script>
-import jwt from 'jsonwebtoken';
-import { axiosMixin } from '../mixins/axios';
 import { validationMixin } from '../mixins/validation';
 
 export default {
   name: 'Login',
-  mixins: [axiosMixin, validationMixin],
+  mixins: [validationMixin],
   data: () => ({
     formSchema: {
       email: '',
@@ -55,7 +53,7 @@ export default {
     loginUrl: 'login',
   }),
   methods: {
-    async submit() {
+    submit() {
       let valid = true;
       for (const field in this.validations) {
         if (!this.validations[field].valid) {
@@ -63,24 +61,12 @@ export default {
         }
       }
       if (valid) {
-        try {
-          const result = await this.mockedHttp.login(
-            this.loginUrl,
-            this.formSchema
-          );
-          if (result) {
-            const token = jwt.sign({ data: this.formSchema.email }, 'secret', {
-              expiresIn: 60 * 60,
-            });
-            this.$cookies.set('access_token', token, {
-              path: '/',
-              maxAge: 60 * 60 * 24 * 7,
-            });
-            this.$store.commit('setAuth', token);
-            this.$router.push('/');
-          }
-        } catch (e) {
-          this.$store.commit('setError', { e });
+        const result = this.$store.dispatch('login', {
+          email: this.formSchema.email,
+          password: this.formSchema.password,
+        });
+        if (result) {
+          this.$router.push('/');
         }
       }
     },

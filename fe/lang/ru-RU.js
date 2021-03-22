@@ -15,6 +15,7 @@ export default {
   close: 'Закрыть',
   regSuccess: 'Регистрация прошла успешно',
   regError: 'Ошибка регистрации',
+  serverError: 'Ошибка сервера',
   loginError: 'Ошибка авторизации',
   pages: {
     index: 'Главная',

@@ -15,6 +15,7 @@ export default {
   close: 'Close',
   regSuccess: 'Registration success',
   regError: 'Registration error',
+  serverError: 'Server error',
   loginError: 'Sign in error',
   pages: {
     index: 'Main',

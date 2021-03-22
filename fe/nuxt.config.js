@@ -63,8 +63,14 @@ export default {
       langDir: 'lang/',
       defaultLocale: 'ru'
     }],
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
+
+  proxy: {
+    '/api': 'http://example.com',
+  },
 
   router: {
     middleware: ['guard']
