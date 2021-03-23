@@ -11,16 +11,16 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }} Made by Roman Pakhomov</span>
     </v-footer>
-    <v-snackbar v-model="snackbarError" :timeout="timeout">
-      {{ $t(errorText) }}
+    <v-snackbar v-if="error" v-model="snackbarError" :timeout="timeout">
+      {{ $t(error) }}
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbarError = false">
           {{ $t('close') }}
         </v-btn>
       </template>
     </v-snackbar>
-    <v-snackbar v-model="snackbarSuccess" :timeout="timeout">
-      {{ $t(successText) }}
+    <v-snackbar v-if="success" v-model="snackbarSuccess" :timeout="timeout">
+      {{ $t(success) }}
       <template v-slot:action="{ attrs }">
         <v-btn
           color="blue"
@@ -32,7 +32,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-overlay v-if="loading" :value="loading" class="loading">
+    <v-overlay v-if="loading" class="loading">
       <img src="/Spinner-0.8s-314px.svg" alt="" />
     </v-overlay>
   </v-app>
@@ -47,16 +47,12 @@ export default {
   },
   data() {
     return {
-      hidden: true,
       clipped: false,
       drawer: false,
       fixed: false,
-      snackbarError: false,
-      errorText: '',
-      snackbarSuccess: false,
-      successText: '',
+      snackbarError: true,
+      snackbarSuccess: true,
       timeout: 5000,
-      loading: false,
       items: [
         {
           icon: 'mdi-apps',
@@ -75,20 +71,18 @@ export default {
       title: 'Vuetify.js',
     };
   },
-  watch: {
-    '$store.state.hidden'() {
-      this.hidden = this.$store.state.hidden;
+  computed: {
+    hidden() {
+      return this.$store.state.hidden;
     },
-    '$store.state.error'() {
-      this.errorText = this.$store.state.error;
-      this.snackbarError = true;
+    error() {
+      return this.$store.state.error;
     },
-    '$store.state.success'() {
-      this.successText = this.$store.state.success;
-      this.snackbarSuccess = true;
+    success() {
+      return this.$store.state.success;
     },
-    '$store.state.loading'() {
-      this.loading = this.$store.state.loading;
+    loading() {
+      return this.$store.state.loading;
     },
   },
 };

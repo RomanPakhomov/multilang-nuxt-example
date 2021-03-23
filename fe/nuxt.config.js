@@ -68,13 +68,13 @@ export default {
     '@nuxtjs/proxy'
   ],
 
-  axios: {
-    proxy: true
-  },
+  // axios: {
+  //   proxy: true
+  // },
 
-  proxy: {
-    '/api/': { changeOrigin: true },
-  },
+  // proxy: {
+  //   '/api/': { changeOrigin: true },
+  // },
 
   router: {
     middleware: ['guard']

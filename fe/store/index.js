@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3001/api';
+const baseUrl = 'http://80.87.192.59:5252/api';
 
 export const state = () => ({
   auth: null,
@@ -47,9 +47,9 @@ export const actions = {
       );
       const result = await this.$axios.get(`${baseUrl}/wallet`);
       commit('setLoading', false);
-      if (result.status === 200) {
-        const { wallets, combinedSumm } = result.data;
-        commit('setCombinedSumm', combinedSumm);
+      if (result.status === 200 && result.data.success) {
+        const { wallets, balance } = result.data;
+        commit('setCombinedSumm', balance);
         commit('setWallets', wallets);
       } else {
         commit('setError', 'serverError');
@@ -95,10 +95,9 @@ export const actions = {
       };
       const result = await this.$axios.post(`${baseUrl}/auth/login`, body);
       commit('setLoading', false);
-      if (result.status === 201) {
-        localStorage.setItem('auth', result.data.accessToken);
-        document.cookie = `token = ${result.data.accessToken}`;
-        commit('setAuth', result.data.accessToken);
+      if (result.status === 200 && result.data.success) {
+        document.cookie = `token = ${result.data.access_token}`;
+        commit('setAuth', result.data.access_token);
         return true;
       } else {
         commit('setError', 'loginError');

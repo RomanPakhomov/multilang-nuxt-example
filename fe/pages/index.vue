@@ -12,7 +12,7 @@
           :key="i"
           class="col-sm-4 col-lg-3"
         >
-          <Wallet :coinId="wallet.coinId" :amount="wallet.amount"></Wallet>
+          <Wallet :wallet="wallet"></Wallet>
         </v-col>
       </v-row>
     </div>
@@ -32,29 +32,11 @@ export default {
     await this.$store.dispatch('getWallets');
   },
   computed: {
-    wallets: {
-      get() {
-        return this.$store.state.wallets;
-      },
-      set() {
-        return [];
-      },
+    wallets() {
+      return this.$store.state.wallets;
     },
-    combinedSumm: {
-      get() {
-        return this.$store.state.combinedSumm;
-      },
-      set() {
-        return 0;
-      },
-    },
-  },
-  watch: {
-    '$store.state.wallets'() {
-      this.wallets = this.$store.state.wallets;
-    },
-    '$store.state.combinedSumm'() {
-      this.combinedSumm = this.$store.state.combinedSumm;
+    combinedSumm() {
+      return this.$store.state.combinedSumm;
     },
   },
 };
