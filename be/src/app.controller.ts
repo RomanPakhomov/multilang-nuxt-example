@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -15,8 +15,8 @@ export class AppController {
     return this.appService.registration(user);
   }
 
-  @Post('/api/auth/logi')
+  @Post('/api/auth/login')
   login(@Body() user: any): any {
-    return this.appService.login(user);
+    return this.appService.login(user)
   }
 }

@@ -1,4 +1,4 @@
-const baseUrl = '/api';
+const baseUrl = 'http://80.87.192.59:5252/api';
 
 export const state = () => ({
   auth: null,
@@ -8,6 +8,7 @@ export const state = () => ({
   hidden: true,
   loading: false,
   locale: null,
+  success: null,
 });
 
 export const mutations = {
@@ -37,52 +38,74 @@ export const mutations = {
 export const actions = {
   async getWallets({ commit }) {
     try {
-      await commit('setLoading', true);
+      commit('setLoading', true);
+      this.$axios.setHeader('Content-Type', 'application/json');
+      this.$axios.setHeader('Access-Control-Allow-Origin', '*');
+      this.$axios.setHeader(
+        'Authorization',
+        `Bearer ${this.$cookies.get('token')}`
+      );
       const result = await this.$axios.get(`${baseUrl}/wallet`);
-      console.log('result', result.data);
-      await setTimeout(() => {}, 5000);
-      await commit('setLoading', false);
-      if (result.status === 200) {
-        const { wallets, combinedSumm } = result.data;
-        await commit('setCombinedSumm', combinedSumm);
-        await commit('setWallets', wallets);
+      commit('setLoading', false);
+      if (result.status === 200 && result.data.success) {
+        const { wallets, balance } = result.data;
+        commit('setCombinedSumm', balance);
+        commit('setWallets', wallets);
       } else {
-        await commit('setError', 'serverError');
+        commit('setError', 'serverError');
       }
     } catch (e) {
       console.log(e);
-      await commit('setError', 'serverError');
+      commit('setLoading', false);
+      commit('setError', 'serverError');
     }
   },
-  async registr({ commit }) {
+  async registr({ commit }, user) {
     try {
-      await commit('setLoading', true);
-      const result = await this.$http.post(`${baseUrl}/auth/register`);
-      await commit('setLoading', false);
+      commit('setLoading', true);
+      this.$axios.setHeader('Content-Type', 'application/json');
+      this.$axios.setHeader('Access-Control-Allow-Origin', '*');
+      const body = {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+      };
+      const result = await this.$axios.post(`${baseUrl}/auth/register`, body);
+      commit('setLoading', false);
       if (result.status === 201) {
-        await commit('setSuccess', 'regSuccess');
+        commit('setSuccess', 'regSuccess');
         return true;
       } else {
-        await commit('setError', 'regError');
+        commit('setError', 'regError');
       }
     } catch (e) {
       console.log(e);
-      await commit('setError', 'serverError');
+      commit('setLoading', false);
+      commit('setError', 'serverError');
     }
   },
-  async login({ commit }) {
+  async login({ commit }, user) {
     try {
-      await commit('setLoading', true);
-      const result = await this.$http.post(`${baseUrl}/auth/login`);
-      await commit('setLoading', false);
-      if (result.status === 200) {
-        await commit('setAuth', result.data.accessToken);
+      commit('setLoading', true);
+      this.$axios.setHeader('Content-Type', 'application/json');
+      this.$axios.setHeader('Access-Control-Allow-Origin', '*');
+      const body = {
+        email: user.email,
+        password: user.password,
+      };
+      const result = await this.$axios.post(`${baseUrl}/auth/login`, body);
+      commit('setLoading', false);
+      if (result.status === 200 && result.data.success) {
+        document.cookie = `token = ${result.data.access_token}`;
+        commit('setAuth', result.data.access_token);
+        return true;
       } else {
-        await commit('setError', 'loginError');
+        commit('setError', 'loginError');
       }
     } catch (e) {
       console.log(e);
-      await commit('setError', 'serverError');
+      commit('setLoading', false);
+      commit('setError', 'serverError');
     }
   },
 };

@@ -1,7 +1,6 @@
 export const validationMixin = {
   methods: {
     validate(field) {
-      console.log('validate', field);
       if (this.validations[field]) {
         this.validations[field] = {
           ...this.validations[field],
@@ -13,7 +12,6 @@ export const validationMixin = {
             this.formSchema[field].length ||
             this.validations[field].between[1] <= this.formSchema[field].length)
         ) {
-          console.log('between');
           const min = this.validations[field].between[0];
           const max = this.validations[field].between[1];
           this.validations[field] = {

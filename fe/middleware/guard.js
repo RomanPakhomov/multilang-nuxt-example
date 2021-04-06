@@ -1,5 +1,5 @@
 export default function ({ store, route, redirect, app }) {
-  const token = app.$cookies.get('access_token');
+  const token = app.$cookies.get('token');
   let location = '';
   if (app.i18n.locale === 'en') {
     location = '/en';
@@ -8,7 +8,7 @@ export default function ({ store, route, redirect, app }) {
     token &&
     (route.path.includes('/login') || route.path.includes('/registration'))
   ) {
-    return redirect(`${location}`);
+    return location === '' ? redirect('/') : redirect(location);
   }
   if (!token) {
     if (route.path === '/') {

@@ -70,16 +70,15 @@ export default {
     registrationUrl: 'registration',
   }),
   methods: {
-    submit() {
+    async submit() {
       let valid = true;
       for (const field in this.validations) {
         if (!this.validations[field].valid) {
           valid = false;
         }
       }
-      console.log(valid);
       if (valid) {
-        const result = this.$store.dispatch('registr', {
+        const result = await this.$store.dispatch('registr', {
           name: this.formSchema.name,
           email: this.formSchema.email,
           password: this.formSchema.password,

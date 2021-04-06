@@ -3,14 +3,15 @@
     <v-card-text>
       <div class="coin-name">
         <div
+          v-if="img"
           class="coin-img"
           :style="{ backgroundImage: 'url(/' + img + ')' }"
         ></div>
-        {{ coinName() }}
+        {{ wallet.title.toUpperCase() }}
       </div>
       <div class="coin-amount">
-        {{ amount }}
-        <span>{{ coinId.toUpperCase() }}</span>
+        {{ wallet.balance }}
+        <span>{{ wallet.slug.toUpperCase() }}</span>
       </div>
     </v-card-text>
     <v-card-actions class="wallet-actions">
@@ -27,23 +28,34 @@
 <script>
 export default {
   name: 'Wallet',
-  props: ['coinId', 'amount'],
+  props: ['wallet'],
   data: () => ({
     img: null,
   }),
+  mounted() {
+    this.createImg();
+  },
   methods: {
-    coinName() {
-      switch (this.coinId) {
+    createImg() {
+      switch (this.wallet.slug) {
         case 'eth': {
           this.img = 'Ethereum-ETH-icon.png';
-          return 'ETHIRIUM';
+          break;
         }
         case 'btc': {
           this.img = 'BitCoin-icon.png';
-          return 'BITCOIN';
+          break;
+        }
+        case 'ltc': {
+          this.img = 'litecoin-ltc-logo.png';
+          break;
+        }
+        case 'doge': {
+          this.img = 'dogecoin-doge-logo.png';
+          break;
         }
         default: {
-          return 'COIN';
+          this.img = null;
         }
       }
     },
